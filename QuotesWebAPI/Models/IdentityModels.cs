@@ -26,6 +26,7 @@ namespace QuotesWebAPI.Models
         {
         }
 
+        //DbSet represents table in database
         public DbSet<Quote> Quotes { get; set; }
 
         public static ApplicationDbContext Create()

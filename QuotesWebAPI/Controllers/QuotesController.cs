@@ -62,7 +62,7 @@ namespace QuotesWebAPI.Controllers
         }
 
         // GET: api/Quotes/5
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get(int id) //gets a specific quote
         {
             var quote = quotesDbContext.Quotes.Find(id);
             if (quote == null)
@@ -95,7 +95,7 @@ namespace QuotesWebAPI.Controllers
                 return BadRequest(ModelState);
             }
             string userId = User.Identity.GetUserId();
-            var entity = quotesDbContext.Quotes.FirstOrDefault(q => q.ID == id); //gets any record from the database
+            var entity = quotesDbContext.Quotes.FirstOrDefault(q => q.ID == id); //gets a record from the database
 
             if(entity == null)
             {
@@ -107,6 +107,7 @@ namespace QuotesWebAPI.Controllers
                 return BadRequest("You do not have the right to update this record...");
             }
 
+            //updates data and saves changes to database
             entity.Title = quote.Title;
             entity.Author = quote.Author;
             entity.Description = quote.Description;
@@ -124,7 +125,7 @@ namespace QuotesWebAPI.Controllers
                 return NotFound();
             }
 
-            if (userId != quote.UserID)
+            if (userId != quote.UserID) //checks to make sure the user trying to access record matches the user who owns the record in the database
             {
                 return BadRequest("You do not have the right to delete this record...");
             }
